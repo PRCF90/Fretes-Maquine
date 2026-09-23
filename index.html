@@ -28,8 +28,8 @@
     input[type="text"] { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 3px; font-size: 12px; }
     input[type="text"]:focus, textarea:focus { border-color: #3182ce; outline: none; background: #fffbe6; }
     
-    /* Estilo autoajustável para o campo de Observação */
-    textarea.obs-textarea {
+    /* Estilo autoajustável para o campo de Cliente e Observação */
+    textarea.auto-textarea {
       width: 100%;
       min-height: 32px;
       padding: 5px;
@@ -264,8 +264,10 @@
                onchange="salvarCampo('${turno}', ${index})" placeholder="Nº Atendimento">
       </td>
       <td>
-        <input type="text" id="${turno}-cliente-${index}" value="${dados.cliente || ''}" 
-               onchange="salvarCampo('${turno}', ${index})" placeholder="Cliente">
+        <textarea id="${turno}-cliente-${index}" class="auto-textarea" 
+                  oninput="autoAjustarAlturaTextarea(this)" 
+                  onchange="salvarCampo('${turno}', ${index})" 
+                  placeholder="Cliente">${dados.cliente || ''}</textarea>
       </td>
       <td>
         <input type="text" id="${turno}-vendedor-${index}" value="${dados.vendedor || ''}" 
@@ -279,7 +281,7 @@
         <div class="data-hora-cell" id="${turno}-dataHora-${index}">${dataHoraStr}</div>
       </td>
       <td>
-        <textarea id="${turno}-obs-${index}" class="obs-textarea" 
+        <textarea id="${turno}-obs-${index}" class="auto-textarea" 
                   oninput="autoAjustarAlturaTextarea(this)" 
                   onchange="salvarCampo('${turno}', ${index})" 
                   placeholder="Observações">${dados.obs || ''}</textarea>
@@ -331,7 +333,7 @@
       tbodyTarde.appendChild(construirLinha('tarde', i, dadosLinhaTarde));
     }
 
-    document.querySelectorAll('.obs-textarea').forEach(textarea => {
+    document.querySelectorAll('.auto-textarea').forEach(textarea => {
       autoAjustarAlturaTextarea(textarea);
     });
   }
